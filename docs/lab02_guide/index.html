@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KKU Campus Guide - หน้าหลัก</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --primary-color: #A73B24;
+            --primary-hover: #8a301d;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #fff;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Kanit', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+
+        /* --- Header & Navbar --- */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-md);
+            padding: 0.8rem 0;
+            position: sticky; top: 0; z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        .header-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo-wrapper { display: flex; align-items: center; gap: 15px; }
+        canvas#logoCanvas { width: 60px; height: 60px; }
+
+        /* Navbar Styling */
+        .navbar { display: flex; gap: 10px; }
+        .nav-link {
+            text-decoration: none; color: #555; font-weight: 500; padding: 8px 16px;
+            border-radius: 20px; transition: 0.3s;
+        }
+        .nav-link:hover { background-color: #f0f0f0; color: var(--primary-color); }
+        .nav-link.active { background-color: var(--primary-color); color: white; }
+
+        .student-info { text-align: right; font-size: 0.85rem; color: #666; }
+        .student-info strong { color: var(--primary-color); display: block; }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative; height: 40vh; min-height: 300px;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; margin-bottom: 3rem; background-color: #2c1a1a; overflow: hidden;
+        }
+        #heroParticleCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .hero-content { position: relative; z-index: 2; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem; }
+
+        /* --- Content Grid --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .places-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; margin-bottom: 4rem;
+        }
+        .place-card {
+            background: var(--card-bg); border-radius: 16px; overflow: hidden;
+            box-shadow: var(--shadow-md); transition: transform 0.3s, box-shadow 0.3s;
+            display: flex; flex-direction: column;
+        }
+        .place-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        
+        .card-images { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; height: 220px; }
+        .card-images::-webkit-scrollbar { height: 6px; }
+        .card-images::-webkit-scrollbar-thumb { background-color: #ddd; border-radius: 3px; }
+        .card-images img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: center; }
+        .card-content { padding: 1.5rem; }
+        .card-content h3 { color: var(--primary-color); margin-bottom: 0.5rem; }
+
+        footer { background-color: #222; color: #ccc; text-align: center; padding: 2rem; margin-top: auto; }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; gap: 15px; }
+            .navbar { margin: 5px 0; width: 100%; justify-content: center; }
+            .student-info { text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <div class="logo-wrapper">
+                <canvas id="logoCanvas" width="60" height="60"></canvas>
+                <div>
+                    <h2 style="margin: 0; line-height: 1; color: #333;">KKU Guide</h2>
+                </div>
+            </div>
+            
+            <nav class="navbar">
+                <a href="index.html" class="nav-link active">หน้าหลัก</a>
+                <a href="form.html" class="nav-link">แนะนำสถานที่</a>
+            </nav>
+
+            <div class="student-info">
+                รหัสนักศึกษา: <strong>673380251-9</strong>
+                ชื่อ-สกุล: <strong>อดิศักดิ์ ทาตระกูล</strong>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <canvas id="heroParticleCanvas"></canvas>
+        <div class="hero-content">
+            <h1>เที่ยว มข. ไปด้วยกัน</h1>
+            <p>ค้นหาที่กิน ที่เที่ยว และมุมพักผ่อนในรั้วมหาวิทยาลัยขอนแก่น</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div style="text-align: center; margin: 3rem 0 2rem;">
+            <h2 style="color: var(--primary-color);">สถานที่แนะนำ (Highlights)</h2>
+            <p style="color: #666;">ปัดรูปภาพเพื่อชมบรรยากาศเพิ่มเติม</p>
+        </div>
+
+        <section class="places-grid">
+            <article class="place-card">
+                <div class="card-images">
+                    <img src="images/สีฐาน1.jpg" alt="บึงสีฐาน" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Khon_Kaen_University_01.jpg/800px-Khon_Kaen_University_01.jpg'">
+                    <img src="images/สีฐาน2.jpg" alt="Sunset Sithan" onerror="this.src='https://fastly.4sqi.net/img/general/600x600/33362629_C-b9vUUEiGCNyRMcYyT3cT4CO1oKyw7C1uXQwbqWVFg.jpg'">
+                </div>
+                <div class="card-content">
+                    <h3>1. บึงสีฐาน (Sithan Lake)</h3>
+                    <p>จุดเช็คอินยอดนิยมสำหรับชมพระอาทิตย์ตกและออกกำลังกาย ยามเย็นแสงสวยมาก เหมาะแก่การถ่ายรูปพอร์ตเทรต</p>
+                </div>
+            </article>
+            <article class="place-card">
+                <div class="card-images">
+                    <img src="images/หอศิล1.jpg" alt="หอศิลป์" onerror="this.src='https://via.placeholder.com/800x600/A73B24/FFFFFF?text=Art+Center'">
+                    <img src="images/หอศิล2.jpg" alt="นิทรรศการ" onerror="this.src='https://via.placeholder.com/800x600/A73B24/FFFFFF?text=Exhibition'">
+                </div>
+                <div class="card-content">
+                    <h3>2. หอศิลปวัฒนธรรม</h3>
+                    <p>แหล่งเสพงานศิลป์ริมบึง สถาปัตยกรรมสวยงาม มีนิทรรศการหมุนเวียนให้เข้าชมฟรีตลอดทั้งปี</p>
+                </div>
+            </article>
+            <article class="place-card">
+                <div class="card-images">
+                    <img src="images/ธรรมชาติ1.jpg" alt="พิพิธภัณฑ์" onerror="this.src='https://via.placeholder.com/800x600/A73B24/FFFFFF?text=Museum'">
+                    <img src="images/ธรรมชาติ2.jpg" alt="โซนวิทย์" onerror="this.src='https://via.placeholder.com/800x600/A73B24/FFFFFF?text=Dino+Zone'">
+                </div>
+                <div class="card-content">
+                    <h3>3. พิพิธภัณฑ์ธรรมชาติวิทยา</h3>
+                    <p>สนุกกับโลกดึกดำบรรพ์และไดโนเสาร์ภูเวียง ภายในจัดแสดงแสงสีเสียงน่าตื่นตาตื่นใจ</p>
+                </div>
+            </article>
+            <article class="place-card">
+                <div class="card-images">
+                    <img src="images/วิทย์1.jpg" alt="Science Park" onerror="this.src='https://via.placeholder.com/800x600/A73B24/FFFFFF?text=Science+Park'">
+                    <img src="images/วิทย์2.jpg" alt="Startup" onerror="this.src='https://via.placeholder.com/800x600/A73B24/FFFFFF?text=Co-Working'">
+                </div>
+                <div class="card-content">
+                    <h3>4. อุทยานวิทยาศาสตร์</h3>
+                    <p>ตึกที่ทันสมัยที่สุดใน มข. มีร้านกาแฟ Amazon วิวสวย และ Co-working space สำหรับนั่งทำงานชิลๆ</p>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 KKU Campus Guide Project. Adisak Thatrakun 673380251-9</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Logo Animation
+            const logoCanvas = document.getElementById('logoCanvas');
+            const logoCtx = logoCanvas.getContext('2d');
+            let angle = 0;
+            function animateLogo() {
+                logoCtx.clearRect(0,0,60,60);
+                const cx=30, cy=30;
+                logoCtx.beginPath(); logoCtx.arc(cx, cy, 22, 0, Math.PI*2); logoCtx.fillStyle='#A73B24'; logoCtx.fill();
+                logoCtx.fillStyle='white'; logoCtx.textAlign='center'; logoCtx.textBaseline='middle'; 
+                logoCtx.font='bold 12px Arial'; logoCtx.fillText('KKU', cx, cy);
+                logoCtx.save(); logoCtx.translate(cx, cy); logoCtx.rotate(angle);
+                logoCtx.beginPath(); logoCtx.arc(0, 0, 26, 0, Math.PI*1.8); 
+                logoCtx.strokeStyle='#A73B24'; logoCtx.lineWidth=3; logoCtx.stroke(); logoCtx.restore();
+                angle+=0.05; requestAnimationFrame(animateLogo);
+            }
+            if(logoCanvas) animateLogo();
+
+            // Background Animation
+            const heroCanvas = document.getElementById('heroParticleCanvas');
+            if(heroCanvas){
+                const ctx = heroCanvas.getContext('2d');
+                let particles = [];
+                function resize(){ heroCanvas.width = heroCanvas.offsetWidth; heroCanvas.height = heroCanvas.offsetHeight; }
+                resize(); window.addEventListener('resize', resize);
+                
+                class P {
+                    constructor(){ this.x=Math.random()*heroCanvas.width; this.y=Math.random()*heroCanvas.height; this.vx=(Math.random()-0.5); this.vy=(Math.random()-0.5); this.s=Math.random()*2+1; }
+                    up(){ this.x+=this.vx; this.y+=this.vy; if(this.x<0||this.x>heroCanvas.width)this.vx*=-1; if(this.y<0||this.y>heroCanvas.height)this.vy*=-1; }
+                    dr(){ ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,Math.PI*2); ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.fill(); }
+                }
+                for(let i=0; i<40; i++) particles.push(new P());
+                function ani(){
+                    ctx.clearRect(0,0,heroCanvas.width,heroCanvas.height);
+                    particles.forEach(p=>{ p.up(); p.dr(); });
+                    for(let i=0; i<particles.length; i++){
+                        for(let j=i; j<particles.length; j++){
+                            let dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+                            if(dx*dx+dy*dy < 10000){ ctx.beginPath(); ctx.strokeStyle='rgba(255,255,255,0.1)'; ctx.moveTo(particles[i].x,particles[i].y); ctx.lineTo(particles[j].x,particles[j].y); ctx.stroke(); }
+                        }
+                    }
+                    requestAnimationFrame(ani);
+                }
+                ani();
+            }
+        });
+    </script>
+</body>
+</html>
